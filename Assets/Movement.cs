@@ -5,11 +5,13 @@ using UnityEngine;
 public class Movement : MonoBehaviour
 {
     public float speed = 0.10f;
+    public float runspeed = 0.28f;
 
     private Rigidbody2D rb;
     private Animator animator;
 
     private bool playerFaceRight = true;
+    private bool isShiftDown = false;
 
     // Start is called before the first frame update
     void Start()
@@ -24,10 +26,18 @@ public class Movement : MonoBehaviour
         float dir = Input.GetAxisRaw("Horizontal");
         if (dir != 0)
         {
+            float tempspeed = speed;
+            if (Input.GetKey(KeyCode.LeftShift))
+                tempspeed = runspeed;
+
             // pressed horizontal axis
-            Vector2 targetpos = new Vector2(transform.position.x + dir * speed, 0);
+            Vector2 targetpos = new Vector2(transform.position.x + dir * tempspeed, 0);
             rb.MovePosition(targetpos);
-            animator.SetFloat("walking", Mathf.Abs(dir));
+
+            if (Input.GetKey(KeyCode.LeftShift))
+                animator.SetFloat("walking", 2.1f);
+            else
+                animator.SetFloat("walking", Mathf.Abs(dir));
 
             if (dir == -1 && playerFaceRight)
             {
