@@ -4,17 +4,22 @@ using UnityEngine;
 
 public class RockScript : MonoBehaviour
 {
-    public float throwspeed = 0.2f;
+    public float rangeDestroy = 6.5f;    
+    private Rigidbody2D rb;
+
+    private float initX = 0;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        rb = GetComponent<Rigidbody2D>();
+        initX = transform.position.x;
     }
 
     // Update is called once per frame
-    void FixedUpdate()
+    void Update()
     {
-        transform.position = new Vector3(transform.position.x * throwspeed , transform.position.y,0);
+        if (Mathf.Abs(transform.position.x - initX) >= rangeDestroy)
+            Destroy(gameObject);
     }
 }

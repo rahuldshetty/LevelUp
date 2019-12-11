@@ -8,6 +8,7 @@ public class Movement : MonoBehaviour
     public float runspeed = 0.28f;
     public float jumpspeed = 0.15f;
     public float updownspeed = 0.12f;
+    public float throwspeed = 15f;
     public GameObject stonePrefab;
     
     private Rigidbody2D rb;
@@ -16,6 +17,7 @@ public class Movement : MonoBehaviour
     private bool playerFaceRight = true;
     private bool isShiftDown = false;
     private bool isThrowing = false;
+    
 
     private bool isGrounded = true;
 
@@ -70,7 +72,7 @@ public class Movement : MonoBehaviour
 
     void manageThrow()
     {
-        if(Input.GetMouseButton(0) )
+        if(Input.GetMouseButton(0) && isThrowing == false )
         {
             animator.SetFloat("throw",0.2f);
             isThrowing = true;
@@ -78,9 +80,13 @@ public class Movement : MonoBehaviour
             // throw stone
             Vector3 faceDirection = transform.position;
             GameObject obj = Instantiate(stonePrefab, faceDirection,new Quaternion(0,0,0,0));
-
+            Vector2 dir;
+            if (playerFaceRight)
+                dir = Vector2.right;
+            else dir = Vector2.left;
+            obj.GetComponent<Rigidbody2D>().velocity = dir * throwspeed;
         }
-        else
+        else 
         {
             isThrowing = false;
             animator.SetFloat("throw", 0.0f);

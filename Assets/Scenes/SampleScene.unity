@@ -339,9 +339,9 @@ MonoBehaviour:
   runspeed: 0.18
   jumpspeed: 0.05
   updownspeed: 0.12
+  throwspeed: 15
   stonePrefab: {fileID: 6779305628100731615, guid: 4f3fc92c9bc4b3047b20cf041644277e,
     type: 3}
-  throwspeed: 0.21
 --- !u!61 &1186302255
 BoxCollider2D:
   m_ObjectHideFlags: 0
